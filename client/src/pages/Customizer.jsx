@@ -8,7 +8,7 @@ import { download } from '../assets';
 import { downloadCanvasToImage, reader } from '../config/helpers';
 import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motions';
-import { CustomButton,   AIPicker,   ColorPicker,   FilerPicker,   Tab } from '../Components';
+import { CustomButton, AIPicker, ColorPicker, FilerPicker, Tab } from '../Components';
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -27,7 +27,7 @@ const Customizer = () => {
                   <Tab
                     key={tab.name}
                     tab={tab}
-                    handleClick={() => {}}
+                    handleClick={() => { }}
                   />
                 ))}
               </div>
@@ -37,13 +37,31 @@ const Customizer = () => {
           <motion.div
             className='absolute z-10 top-5 right-5'
             {...fadeAnimation}
-            >
-              <CustomButton 
+          //significa que estamos expandindo o objeto fadeAnimation para o objeto atual. Isso significa que estamos adicionando todas as propriedades e valores do objeto fadeAnimation ao objeto atual.
+          >
+            <CustomButton
               type='filled'
               title=' Voltar'
-              handleClick={() => state.intro =true}
+              handleClick={() => state.intro = true}
+              // Essa função faz com o state.intro seja alterado para true.
+              // fazendo com que retorn para aba inicial.
               customStyles='w-fit px-4 py-2.5 font-bold text-sm'
+            />
+          </motion.div>
+
+          <motion.div
+            className='filtertabs-container'
+            {...slideAnimation('up')}
+          >
+            {FilterTabs.map((tab) => (
+              <Tab
+                key={tab.name}
+                tab={tab}
+                isFilterTab
+                isActiveTab=''
+                handleClick={() => { }}
               />
+            ))}
 
           </motion.div>
         </>
