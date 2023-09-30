@@ -4,6 +4,7 @@ import { Environment, Center } from '@react-three/drei';
 import Shirt from './Shirt';
 import Backdrop from './Backdrop';
 import CameraRig from './CameraRig';
+import Hat from './Hat';
 
 const CanvasModel = () => {
   return (
@@ -20,6 +21,7 @@ const CanvasModel = () => {
         <Backdrop /> 
         <Center>
           <Shirt />
+          
         </Center>
       </CameraRig>
     </Canvas>

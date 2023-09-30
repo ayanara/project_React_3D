@@ -6,36 +6,37 @@ import { Decal, useGLTF, useTexture } from '@react-three/drei';
 
 import state from '../store';
 
-const Shirt = () => {
-  const snap = useSnapshot(state);
-  const { nodes, materials } = useGLTF('/shirt_baked.glb');
+const Hat = () => {
+  const newState = useSnapshot(state);
+  const { nodes, materials } = useGLTF('/scene.gltf');
 
-  const logoTexture = useTexture(snap.logoDecal);
-  const fullTexture = useTexture(snap.fullDecal);
+  const logoTexture = useTexture(newState.logoDecal);
+  const fullTexture = useTexture(newState.fullDecal);
 
-  useFrame((state, delta) => easing.dampC(materials.lambert1.color, snap.color, 0.25, delta));
+  useFrame((state, delta) => easing.dampC(materials.StrapBuckle.color, newState.color, 0.25, delta));
 
-  const stateString = JSON.stringify(snap);
-
+  const stateString = JSON.stringify(newState);
+  console.log(materials)
   return (
     <group key={stateString}>
       <mesh
         castShadow
-        geometry={nodes.T_Shirt_male.geometry}
+        geometry={nodes.head_StrapBuckle_0.geometry}
         material={materials.lambert1}
         material-roughness={1}
         dispose={null}
+        scale={0.1}
       >
-        {snap.isFullTexture && (
+        {newState.isFullTexture && (
           <Decal 
             position={[0, 0, 0]}
             rotation={[0, 0, 0]}
-            scale={1}
+            scale={0.5}
             map={fullTexture}
           />
         )}
 
-        {snap.isLogoTexture && (
+        {newState.isLogoTexture && (
           <Decal 
             position={[0, 0.04, 0.15]}
             rotation={[0, 0, 0]}
@@ -51,7 +52,7 @@ const Shirt = () => {
   )
 }
 
-export default Shirt
+export default Hat
 
 //O componente Shirt renderiza um modelo 3D de uma camisa com dois decalques: 
 //um decalque do logotipo e um decalque completo. Os decalques são carregados usando os módulos useTexture e useSnapshot. 
