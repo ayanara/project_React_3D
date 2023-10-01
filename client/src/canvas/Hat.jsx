@@ -8,27 +8,28 @@ import state from '../store';
 
 const Hat = () => {
   const newState = useSnapshot(state);
-  const { nodes, materials } = useGLTF('/scene.gltf');
+  const { nodes, materials } = useGLTF('/baseball_hat_028.glb');
 
   const logoTexture = useTexture(newState.logoDecal);
   const fullTexture = useTexture(newState.fullDecal);
 
-  useFrame((state, delta) => easing.dampC(materials.StrapBuckle.color, newState.color, 0.25, delta));
+  useFrame((state, delta) => easing.dampC(materials.baseball_hat_028__Mat.color, newState.color, 0.25, delta));
 
   const stateString = JSON.stringify(newState);
-  console.log(materials)
   return (
     <group key={stateString}>
       <mesh
         castShadow
-        geometry={nodes.head_StrapBuckle_0.geometry}
-        material={materials.lambert1}
+        geometry={nodes.Object_2.geometry}
+        material={materials.baseball_hat_028__Mat}
         material-roughness={1}
         dispose={null}
-        scale={0.1}
+        scale={0.01}
+        position={[0, 0.3, 0]}
+        rotation={[5, 0, -5]}
       >
         {newState.isFullTexture && (
-          <Decal 
+          <Decal
             position={[0, 0, 0]}
             rotation={[0, 0, 0]}
             scale={0.5}
@@ -37,7 +38,131 @@ const Hat = () => {
         )}
 
         {newState.isLogoTexture && (
-          <Decal 
+          <Decal
+            position={[0, 0.04, 0.15]}
+            rotation={[0, 0, 0]}
+            scale={0.15}
+            map={logoTexture}
+            /* map-anisotropy={fullTexture ? 16 : undefined} */
+            depthTest={false}
+            depthWrite={true}
+          />
+        )}
+      </mesh>
+      <mesh
+        castShadow
+        geometry={nodes.Object_3.geometry}
+        material={materials.baseball_hat_028__Mat}
+        material-roughness={1}
+        dispose={null}
+        scale={0.01}
+        position={[0, 0.3, 0]}
+        rotation={[5, 0, -5]}
+      >
+        {newState.isFullTexture && (
+          <Decal
+            position={[0, 0, 0]}
+            rotation={[0, 0, 0]}
+            scale={0.5}
+            map={fullTexture}
+          />
+        )}
+
+        {newState.isLogoTexture && (
+          <Decal
+            position={[0, 0.04, 0.15]}
+            rotation={[0, 0, 0]}
+            scale={0.15}
+            map={logoTexture}
+            /* map-anisotropy={fullTexture ? 16 : undefined} */
+            depthTest={false}
+            depthWrite={true}
+          />
+        )}
+      </mesh>
+      <mesh
+        castShadow
+        geometry={nodes.Object_4.geometry}
+        material={materials.baseball_hat_028__Mat}
+        material-roughness={1}
+        dispose={null}
+        scale={0.01}
+        position={[0, 0.3, 0]}
+        rotation={[5, 0, -5]}
+      >
+        {newState.isFullTexture && (
+          <Decal
+            position={[0, 0, 0]}
+            rotation={[0, 0, 0]}
+            scale={0.5}
+            map={fullTexture}
+          />
+        )}
+
+        {newState.isLogoTexture && (
+          <Decal
+            position={[0, 0.04, 0.15]}
+            rotation={[0, 0, 0]}
+            scale={0.15}
+            map={logoTexture}
+            /* map-anisotropy={fullTexture ? 16 : undefined} */
+            depthTest={false}
+            depthWrite={true}
+          />
+        )}
+      </mesh>
+      <mesh
+        castShadow
+        geometry={nodes.Object_5.geometry}
+        material={materials.baseball_hat_028__Mat}
+        material-roughness={1}
+        dispose={null}
+        scale={0.01}
+        position={[0, 0.3, 0]}
+        rotation={[5, 0, -5]}
+      >
+        {newState.isFullTexture && (
+          <Decal
+            position={[0, 0, 0]}
+            rotation={[0, 0, 0]}
+            scale={0.5}
+            map={fullTexture}
+          />
+        )}
+
+        {newState.isLogoTexture && (
+          <Decal
+            position={[0, 0.04, 0.15]}
+            rotation={[0, 0, 0]}
+            scale={0.15}
+            map={logoTexture}
+            /* map-anisotropy={fullTexture ? 16 : undefined} */
+            depthTest={false}
+            depthWrite={true}
+          />
+        )}
+      </mesh>
+      <mesh
+        castShadow
+        geometry={nodes.Object_6.geometry}
+        material={materials.baseball_hat_028__Mat}
+        material-roughness={1}
+        dispose={null}
+        scale={0.01}
+        position={[0, 0.3, 0]}
+        rotation={[5, 0, -5]}
+      >
+        {newState.isFullTexture && (
+          <Decal
+            position={[0, 0, 0]}
+            rotation={[0, 0, 0]}
+            scale={0.5}
+            map={fullTexture}
+          />
+        )}
+
+        {newState.isLogoTexture && (
+          <Decal
             position={[0, 0.04, 0.15]}
             rotation={[0, 0, 0]}
             scale={0.15}
