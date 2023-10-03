@@ -10,6 +10,10 @@ const Tab = ({ tab, isFilterTab, isActiveTab, handleClick }) => {
   ? {backgroundColor: newState.color, opacity: 0.5 }
   : {backgroundColor: 'transparent', opacity: 1 } 
 
+  //activeStyles que contém os estilos a serem aplicados à aba quando ela estiver ativa. Se a aba for uma aba de filtro e estiver ativa, o objeto activeStyles conterá a cor atual do aplicativo com uma opacidade de 50%. Caso contrário, o objeto activeStyles conterá uma cor transparente com uma opacidade de 100%.
+
+
+
   return (
     <div
       key={tab.name}
