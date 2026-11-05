@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { useFrame } from '@react-three/fiber';
 import { easing } from 'maath';
 import { useSnapshot } from 'valtio';
@@ -46,3 +47,4 @@ const CameraRig = ({ children }) => {
 }
 
 export default CameraRig
+CameraRig.propTypes = { children: PropTypes.node.isRequired };

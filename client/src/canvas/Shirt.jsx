@@ -1,4 +1,3 @@
-import React from 'react'
 import { easing } from 'maath';
 import { useSnapshot } from 'valtio';
 import { useFrame } from '@react-three/fiber';
@@ -15,10 +14,9 @@ const Shirt = () => {
 
   useFrame((state, delta) => easing.dampC(materials.lambert1.color, snap.color, 0.25, delta));
 
-  const stateString = JSON.stringify(snap);
 
   return (
-    <group key={stateString}>
+    <group>
       <mesh
         castShadow
         geometry={nodes.T_Shirt_male.geometry}

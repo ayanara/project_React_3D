@@ -1,74 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
-
-import config from '../config/config';
 import state from '../store';
-import { download } from '../assets';
-import { downloadCanvasToImage, reader } from '../config/helpers';
-import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
-import { fadeAnimation, slideAnimation } from '../config/motions';
+import { downloadCanvasToImage } from '../config/helpers';
+import { EditorTabs, FilterTabs } from '../config/constants';
+import { fadeAnimation } from '../config/motions';
 import { CustomButton, AIPicker, ColorPicker, FilerPicker, Tab } from '../Components';
 
-const Customizer = () => {
+export default function Customizer() {
   const snap = useSnapshot(state);
-  return (
-    <AnimatePresence>
-      {!snap.intro && (
-        <>
-          <motion.nav
-            kay='custom'
-            className='absolute top-0 left-0 z-10'
-            {...slideAnimation('left')}
-          >
-            <div className='flex items-center min-h-screen'>
-              <div className='editortabs-container tabs'>
-                {EditorTabs.map((tab) => (
-                  <Tab
-                    key={tab.name}
-                    tab={tab}
-                    handleClick={() => { }}
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.nav>
-
-          <motion.div
-            className='absolute z-10 top-5 right-5'
-            {...fadeAnimation}
-          //significa que estamos expandindo o objeto fadeAnimation para o objeto atual. Isso significa que estamos adicionando todas as propriedades e valores do objeto fadeAnimation ao objeto atual.
-          >
-            <CustomButton
-              type='filled'
-              title=' Voltar'
-              handleClick={() => state.intro = true}
-              // Essa função faz com o state.intro seja alterado para true.
-              // fazendo com que retorn para aba inicial.
-              customStyles='w-fit px-4 py-2.5 font-bold text-sm'
-            />
-          </motion.div>
-
-          <motion.div
-            className='filtertabs-container'
-            {...slideAnimation('up')}
-          >
-            {FilterTabs.map((tab) => (
-              <Tab
-                key={tab.name}
-                tab={tab}
-                isFilterTab
-                isActiveTab=''
-                handleClick={() => { }}
-              />
-            ))}
-
-          </motion.div>
-        </>
-      )}
-
-    </AnimatePresence>
-  )
+  const [activeTab, setActiveTab] = useState('');
+  const [error, setError] = useState('');
+  const panels = { colorpicker: <ColorPicker />, filepicker: <FilerPicker />, aipicker: <AIPicker /> };
+  function download() {
+    try { downloadCanvasToImage(); setError(''); }
+    catch { setError('Aguarde o modelo carregar e tente baixar novamente.'); }
+  }
+  return <AnimatePresence>{!snap.intro && <motion.section key="customizer" {...fadeAnimation}>
+    <div className="product-actions absolute z-10 top-5 left-5 flex gap-2">
+      <label htmlFor="product" className="sr-only">Produto</label>
+      <select id="product" value={snap.product} onChange={(event) => { state.product = event.target.value; }}>
+        <option value="shirt">Camiseta</option><option value="hat">Boné</option>
+      </select>
+      <button className="rounded-md bg-white px-3 py-2" onClick={download}>Baixar PNG</button>
+    </div>
+    <nav aria-label="Personalização" className="absolute top-1/2 -translate-y-1/2 left-0 z-10 flex items-center">
+      <div className="editortabs-container">
+        {EditorTabs.map((tab) => <Tab key={tab.name} tab={tab} isActiveTab={activeTab === tab.name}
+          handleClick={() => setActiveTab(activeTab === tab.name ? '' : tab.name)} />)}
+      </div>
+      {panels[activeTab]}
+    </nav>
+    <div className="absolute z-10 top-5 right-5"><CustomButton type="filled" title="Voltar"
+      handleClick={() => { state.intro = true; }} customStyles="px-4 py-2.5 font-bold text-sm" /></div>
+    <div className="filtertabs-container">
+      {FilterTabs.map((tab) => {
+        const property = tab.name === 'logoShirt' ? 'isLogoTexture' : 'isFullTexture';
+        return <Tab key={tab.name} tab={tab} isFilterTab isActiveTab={snap[property]}
+          handleClick={() => { state[property] = !state[property]; }} />;
+      })}
+    </div>
+    {error && <p role="alert" className="absolute bottom-24 left-5 z-10 bg-white p-2">{error}</p>}
+  </motion.section>}</AnimatePresence>;
 }
-
-export default Customizer

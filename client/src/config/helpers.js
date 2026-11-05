@@ -1,5 +1,6 @@
 export const downloadCanvasToImage = () => {
   const canvas = document.querySelector("canvas");
+  if (!canvas || !canvas.width || !canvas.height) throw new Error('Canvas indisponível');
   const dataURL = canvas.toDataURL();
   const link = document.createElement("a");
 
@@ -13,7 +14,22 @@ export const downloadCanvasToImage = () => {
 export const reader = (file) =>
   new Promise((resolve, reject) => {
     const fileReader = new FileReader();
-    fileReader.onload = () => resolve(fileReader.result);
+    fileReader.onerror = () => reject(new Error('Falha na leitura do arquivo'));
+    fileReader.onload = () => {
+      const image = new Image();
+      image.onerror = () => reject(new Error('Imagem inválida'));
+      image.onload = () => {
+        const ratio = Math.min(1, 1024 / Math.max(image.width, image.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(image.width * ratio));
+        canvas.height = Math.max(1, Math.round(image.height * ratio));
+        const context = canvas.getContext('2d');
+        if (!context) return reject(new Error('Canvas indisponível'));
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      image.src = fileReader.result;
+    };
     fileReader.readAsDataURL(file);
   });
 

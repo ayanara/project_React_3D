@@ -1,22 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,600;1,900&display=swap");
-@import url("https://rsms.me/inter/inter.css");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 html {
-  font-family: "Inter", sans-serif;
+  font-family: system-ui, sans-serif;
 }
 
 @supports (font-variation-settings: normal) {
   html {
-    font-family: "Inter var", sans-serif;
+    font-family: system-ui, sans-serif;
   }
 }
 
 .app {
   @apply relative w-full h-screen overflow-hidden;
+  height: 100dvh;
 }
 
 .home {
@@ -28,7 +27,7 @@ html {
 }
 
 .head-text {
-  @apply xl:text-[8rem] text-[6rem] xl:leading-[8rem] leading-[70rem] font-black text-black;
+  @apply xl:text-[8rem] text-[4rem] sm:text-[6rem] leading-none font-black text-black;
 }
 
 .download-btn {
@@ -90,3 +89,15 @@ input[type="file"] {
 .sketch-picker > div:nth-child(3) {
   display: none !important;
 }
+.editor-panel {
+  @apply ml-3 p-4 rounded-xl flex flex-col gap-3 shadow-lg text-sm;
+  width: min(240px, calc(100vw - 100px));
+  max-height: calc(100dvh - 180px);
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.96);
+}
+.editor-panel button { @apply rounded-md border border-gray-300 p-2; }
+.editor-panel button:disabled { @apply opacity-40 cursor-not-allowed; }
+.editor-panel input[type="color"] { width: 100%; height: 44px; cursor: pointer; }
+.product-actions select { @apply rounded-md bg-white p-2; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid #2563eb; outline-offset: 3px; }

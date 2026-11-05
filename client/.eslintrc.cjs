@@ -17,4 +17,8 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  overrides: [{
+    files: ['src/canvas/**/*.jsx'],
+    rules: { 'react/no-unknown-property': 'off' },
+  }],
 }

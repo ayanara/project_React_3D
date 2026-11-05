@@ -1,4 +1,4 @@
-import React from 'react'
+import PropTypes from 'prop-types';
 import { useSnapshot } from 'valtio';
 
 import state from '../store';
@@ -6,7 +6,7 @@ import state from '../store';
 const Tab = ({ tab, isFilterTab, isActiveTab, handleClick }) => {
   const newState = useSnapshot(state);
 
-  const activeStyles = isFilterTab && isActiveTab 
+  const activeStyles = isActiveTab
   ? {backgroundColor: newState.color, opacity: 0.5 }
   : {backgroundColor: 'transparent', opacity: 1 } 
 
@@ -15,9 +15,12 @@ const Tab = ({ tab, isFilterTab, isActiveTab, handleClick }) => {
 
 
   return (
-    <div
+    <button
+      type="button"
+      aria-label={({ colorpicker: 'Cor', filepicker: 'Enviar imagem', aipicker: 'IA', logoShirt: 'Exibir logo', stylishShirt: 'Exibir estampa' })[tab.name]}
+      aria-pressed={Boolean(isActiveTab)}
       key={tab.name}
-      className={`tab-btn ${isFilterTab ? 'rounded-full glassmorhism' : 'rounded-4'}`}
+      className={`tab-btn ${isFilterTab ? 'rounded-full glassmorphism' : 'rounded-md'}`}
       onClick={handleClick}
       style={activeStyles}
     >
@@ -27,8 +30,14 @@ const Tab = ({ tab, isFilterTab, isActiveTab, handleClick }) => {
         className={`${isFilterTab ? 'w-2/3 h-2/3' : 'w-11/12 h-11/12 object-contain'}`}
       ></img>
 
-    </div>
+    </button>
   )
 }
 
 export default Tab
+Tab.propTypes = {
+  tab: PropTypes.shape({ name: PropTypes.string.isRequired, icon: PropTypes.string.isRequired }).isRequired,
+  isFilterTab: PropTypes.bool,
+  isActiveTab: PropTypes.bool,
+  handleClick: PropTypes.func.isRequired,
+};

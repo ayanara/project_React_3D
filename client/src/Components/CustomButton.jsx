@@ -1,4 +1,4 @@
-import React from 'react'
+import PropTypes from 'prop-types';
 import { useSnapshot } from 'valtio';
 
 import state from '../store';
@@ -34,3 +34,9 @@ const CustomButton = ({ type, title, customStyles, handleClick }) => {
 }
 
 export default CustomButton
+CustomButton.propTypes = {
+  type: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  customStyles: PropTypes.string,
+  handleClick: PropTypes.func.isRequired,
+};

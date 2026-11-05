@@ -1,9 +1,6 @@
-import React from 'react'
-
-const AIPicker = () => {
-  return (
-    <div>AIPicker</div>
-  )
+export default function AIPicker() {
+  return <div className="editor-panel">
+    <strong>Estampas com IA</strong>
+    <p>A geração de imagens ainda precisa de um serviço conectado. Por enquanto, envie uma imagem pela aba de arquivos.</p>
+  </div>;
 }
-
-export default AIPicker
