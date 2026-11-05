@@ -1,37 +1,72 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useSnapshot } from 'valtio';
 import { reader } from '../config/helpers';
 import state from '../store';
 
 export default function FilerPicker() {
+  const snap = useSnapshot(state);
+  const inputRef = useRef(null);
+  const [placement, setPlacement] = useState('logo');
   const [image, setImage] = useState('');
+  const [filename, setFilename] = useState('');
+  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   async function selectFile(event) {
     const file = event.target.files?.[0];
+    event.target.value = '';
     if (!file) return;
     setImage('');
     setError('');
+    setMessage('');
     if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024) {
       setError('Escolha uma imagem PNG, JPG ou WebP de até 5 MB.');
       return;
     }
     setLoading(true);
-    try { setImage(await reader(file)); }
+    try { setImage(await reader(file)); setFilename(file.name); }
     catch { setError('Não foi possível abrir essa imagem.'); }
     finally { setLoading(false); }
   }
-  function apply(full) {
+  function apply() {
+    const full = placement === 'full';
     state[full ? 'fullDecal' : 'logoDecal'] = image;
     state[full ? 'isFullTexture' : 'isLogoTexture'] = true;
+    setImage('');
+    setMessage(full ? 'Estampa aplicada.' : 'Logo aplicado.');
   }
-  return <div className="editor-panel">
-    <label className="filepicker-label" htmlFor="image-file">Escolher imagem</label>
-    <input id="image-file" type="file" accept="image/png,image/jpeg,image/webp" onChange={selectFile} disabled={loading} />
-    <p className="text-xs">PNG, JPG ou WebP, até 5 MB. Imagens grandes são reduzidas para o 3D.</p>
+  return <div className="editor-panel image-panel">
+    <strong>Suas imagens</strong>
+    <button disabled={loading} onClick={() => inputRef.current?.click()}>{image ? 'Escolher outra imagem' : 'Enviar imagem'}</button>
+    <input ref={inputRef} id="image-file" type="file" accept="image/png,image/jpeg,image/webp" onChange={selectFile} disabled={loading} tabIndex={-1} aria-label="Escolher imagem" />
+    <p className="image-help">PNG, JPG ou WebP, até 5 MB.<br />Para logos, prefira PNG com fundo transparente.</p>
     {loading && <p role="status">Preparando imagem…</p>}
-    {image && <img className="h-20 object-contain" src={image} alt="Prévia da estampa" />}
+    {image && <div className="image-draft">
+      <img className="image-preview" src={image} alt="Prévia da imagem escolhida" />
+      <p className="image-filename" title={filename}>{filename}</p>
+      <fieldset>
+        <legend>Aplicar como</legend>
+        <div className="image-placement">
+          <label><input type="radio" name="placement" value="logo" checked={placement === 'logo'} onChange={() => setPlacement('logo')} /> Logo</label>
+          <label><input type="radio" name="placement" value="full" checked={placement === 'full'} onChange={() => setPlacement('full')} /> Estampa</label>
+        </div>
+      </fieldset>
+      <button className="image-apply" disabled={loading} onClick={apply}>Aplicar imagem</button>
+      <button className="image-cancel" disabled={loading} onClick={() => setImage('')}>Cancelar</button>
+    </div>}
     {error && <p role="alert">{error}</p>}
-    <button disabled={!image || loading} onClick={() => apply(false)}>Aplicar como logo</button>
-    <button disabled={!image || loading} onClick={() => apply(true)}>Aplicar como estampa</button>
+    <p className="image-status" role="status">{message}</p>
+    {(snap.isLogoTexture || snap.isFullTexture) && <div className="applied-images">
+      <strong className="text-xs">No produto</strong>
+      {[{ name: 'Logo', target: 'logo', visible: 'isLogoTexture', decal: 'logoDecal' },
+        { name: 'Estampa', target: 'full', visible: 'isFullTexture', decal: 'fullDecal' }].map((item) => snap[item.visible] &&
+        <div className="applied-image" key={item.target}>
+          <img src={snap[item.decal]} alt={`${item.name} aplicado`} />
+          <div><strong>{item.name}</strong><div className="applied-image-actions">
+            <button disabled={loading} aria-label={`Trocar ${item.name.toLowerCase()}`} onClick={() => { setPlacement(item.target); inputRef.current?.click(); }}>Trocar</button>
+            <button aria-label={`Remover ${item.name.toLowerCase()}`} onClick={() => { state[item.visible] = false; setMessage(`${item.name} removido.`); }}>Remover</button>
+          </div></div>
+        </div>)}
+    </div>}
   </div>;
 }
