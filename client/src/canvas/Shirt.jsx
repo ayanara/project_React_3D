@@ -22,6 +22,9 @@ const Shirt = () => {
         geometry={nodes.T_Shirt_male.geometry}
         material={materials.lambert1}
         material-roughness={1}
+        // The baked AO texture contains a large dark patch on the back.
+        // Keep the fabric normal map, but use scene lighting for shading.
+        material-aoMapIntensity={0}
         dispose={null}
         position={[0, -0.2, 0]}
       >
@@ -31,6 +34,8 @@ const Shirt = () => {
             rotation={[0, 0, 0]}
             scale={1}
             map={fullTexture}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
 
@@ -41,8 +46,8 @@ const Shirt = () => {
             scale={0.15}
             map={logoTexture}
             /* map-anisotropy={fullTexture ? 16 : undefined} */
-            depthTest={false}
-            depthWrite={true}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
       </mesh>

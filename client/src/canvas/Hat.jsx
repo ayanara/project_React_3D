@@ -32,6 +32,8 @@ const Hat = () => {
             rotation={[0, 0, 0]}
             scale={0.5}
             map={fullTexture}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
 
@@ -42,8 +44,8 @@ const Hat = () => {
             scale={0.15}
             map={logoTexture}
             /* map-anisotropy={fullTexture ? 16 : undefined} */
-            depthTest={false}
-            depthWrite={true}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
       </mesh>
@@ -63,6 +65,8 @@ const Hat = () => {
             rotation={[0, 0, 0]}
             scale={0.5}
             map={fullTexture}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
 
@@ -73,8 +77,8 @@ const Hat = () => {
             scale={0.15}
             map={logoTexture}
             /* map-anisotropy={fullTexture ? 16 : undefined} */
-            depthTest={false}
-            depthWrite={true}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
       </mesh>
@@ -94,6 +98,8 @@ const Hat = () => {
             rotation={[0, 0, 0]}
             scale={0.5}
             map={fullTexture}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
 
@@ -104,8 +110,8 @@ const Hat = () => {
             scale={0.15}
             map={logoTexture}
             /* map-anisotropy={fullTexture ? 16 : undefined} */
-            depthTest={false}
-            depthWrite={true}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
       </mesh>
@@ -125,6 +131,8 @@ const Hat = () => {
             rotation={[0, 0, 0]}
             scale={0.5}
             map={fullTexture}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
 
@@ -135,8 +143,8 @@ const Hat = () => {
             scale={0.15}
             map={logoTexture}
             /* map-anisotropy={fullTexture ? 16 : undefined} */
-            depthTest={false}
-            depthWrite={true}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
       </mesh>
@@ -156,6 +164,8 @@ const Hat = () => {
             rotation={[0, 0, 0]}
             scale={0.5}
             map={fullTexture}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
 
@@ -166,8 +176,8 @@ const Hat = () => {
             scale={0.15}
             map={logoTexture}
             /* map-anisotropy={fullTexture ? 16 : undefined} */
-            depthTest={false}
-            depthWrite={true}
+            depthTest={true}
+            material-depthWrite={false}
           />
         )}
       </mesh>
