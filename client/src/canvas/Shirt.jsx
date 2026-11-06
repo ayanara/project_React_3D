@@ -11,7 +11,7 @@ const Shirt = () => {
 
   const logoTexture = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
-  const logoSize = snap.logoPosition === 'left' || snap.logoPosition === 'right' ? 0.075 : 0.15;
+  const logoSize = (snap.logoPosition === 'left' || snap.logoPosition === 'right' ? 0.075 : 0.15) * snap.logoScale;
   const logoAspect = logoTexture.image.width / logoTexture.image.height;
 
   useFrame((state, delta) => easing.dampC(materials.lambert1.color, snap.color, 0.25, delta));
@@ -44,8 +44,8 @@ const Shirt = () => {
         {snap.isLogoTexture && (
           <Decal 
             position={[
-              snap.logoPosition === 'left' ? 0.09 : snap.logoPosition === 'right' ? -0.09 : 0,
-              0.04,
+              (snap.logoPosition === 'left' ? 0.09 : snap.logoPosition === 'right' ? -0.09 : 0) + snap.logoOffsetX,
+              0.04 + snap.logoOffsetY,
               0.15,
             ]}
             rotation={[0, 0, 0]}
@@ -54,7 +54,7 @@ const Shirt = () => {
             scale={[
               logoSize * Math.min(1, logoAspect),
               logoSize / Math.max(1, logoAspect),
-              0.3,
+              0.4,
             ]}
             map={logoTexture}
             /* map-anisotropy={fullTexture ? 16 : undefined} */

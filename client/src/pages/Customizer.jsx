@@ -34,6 +34,7 @@ export default function Customizer() {
     <div className="absolute z-10 top-5 right-5"><CustomButton type="filled" title="Voltar"
       handleClick={() => { state.intro = true; }} customStyles="px-4 py-2.5 font-bold text-sm" /></div>
     <div className="filtertabs-container">
+      <p className="w-full text-center text-xs text-gray-600" role="status">{snap.saveStatus}</p>
       <p className="w-full text-center text-sm text-gray-600 pointer-events-none">Arraste para girar e ver as costas.</p>
       {FilterTabs.map((tab) => {
         const property = tab.name === 'logoShirt' ? 'isLogoTexture' : 'isFullTexture';

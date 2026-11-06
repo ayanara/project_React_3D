@@ -49,10 +49,26 @@ export default function FilerPicker() {
           <label key={option.value}>
             <input type="radio" name="logo-position" value={option.value}
               checked={snap.logoPosition === option.value}
-              onChange={() => { state.logoPosition = option.value; }} /> {option.label}
+              onChange={() => { state.logoPosition = option.value; state.logoOffsetX = 0; state.logoOffsetY = 0; }} /> {option.label}
           </label>)}
       </div>
       <p className="image-help">Lados de quem veste a camiseta.</p>
+      <div className="logo-adjustments">
+        <label htmlFor="logo-size">Tamanho <output>{Math.round(snap.logoScale * 100)}%</output></label>
+        <input id="logo-size" type="range" min="0.5" max="1.5" step="0.05" value={snap.logoScale}
+          onChange={(event) => { state.logoScale = Number(event.target.value); }} />
+        <label htmlFor="logo-horizontal">Posição horizontal</label>
+        <input id="logo-horizontal" type="range" min="-0.03" max="0.03" step="0.001" value={snap.logoOffsetX}
+          aria-valuetext={snap.logoOffsetX === 0 ? 'Centralizado na posição escolhida' : snap.logoOffsetX > 0 ? 'À esquerda de quem veste' : 'À direita de quem veste'}
+          onChange={(event) => { state.logoOffsetX = Number(event.target.value); }} />
+        <div className="logo-range-hints"><span>Direito</span><span>Esquerdo</span></div>
+        <label htmlFor="logo-vertical">Posição vertical</label>
+        <input id="logo-vertical" type="range" min="-0.03" max="0.03" step="0.001" value={snap.logoOffsetY}
+          aria-valuetext={snap.logoOffsetY === 0 ? 'Altura padrão' : snap.logoOffsetY > 0 ? 'Acima da altura padrão' : 'Abaixo da altura padrão'}
+          onChange={(event) => { state.logoOffsetY = Number(event.target.value); }} />
+        <div className="logo-range-hints"><span>Baixo</span><span>Cima</span></div>
+        <button onClick={() => { state.logoScale = 1; state.logoOffsetX = 0; state.logoOffsetY = 0; }}>Restaurar ajustes do logo</button>
+      </div>
     </fieldset>}
     {loading && <p role="status">Preparando imagem…</p>}
     {image && <div className="image-draft">

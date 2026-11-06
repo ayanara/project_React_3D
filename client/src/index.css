@@ -108,6 +108,10 @@ input[type="file"] {
 .image-placement label { @apply flex items-center gap-1 cursor-pointer; }
 .logo-position { @apply flex flex-wrap gap-3 mt-2 text-xs; }
 .logo-position label { @apply flex items-center gap-1 cursor-pointer; }
+.logo-adjustments { @apply flex flex-col gap-2 mt-3; }
+.logo-adjustments label { @apply flex justify-between text-xs; }
+.logo-adjustments input { @apply w-full; }
+.logo-range-hints { @apply flex justify-between text-xs text-gray-500; }
 .image-panel .image-apply { @apply bg-gray-900 text-white border-gray-900 font-semibold; }
 .image-panel .image-cancel { @apply border-0 p-0 text-gray-500 text-xs; }
 .image-status { @apply text-xs text-gray-600; }
