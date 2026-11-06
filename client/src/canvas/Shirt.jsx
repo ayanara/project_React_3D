@@ -11,6 +11,8 @@ const Shirt = () => {
 
   const logoTexture = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
+  const logoSize = snap.logoPosition === 'left' || snap.logoPosition === 'right' ? 0.075 : 0.15;
+  const logoAspect = logoTexture.image.width / logoTexture.image.height;
 
   useFrame((state, delta) => easing.dampC(materials.lambert1.color, snap.color, 0.25, delta));
 
@@ -41,9 +43,19 @@ const Shirt = () => {
 
         {snap.isLogoTexture && (
           <Decal 
-            position={[0, 0.04, 0.15]}
+            position={[
+              snap.logoPosition === 'left' ? 0.09 : snap.logoPosition === 'right' ? -0.09 : 0,
+              0.04,
+              0.15,
+            ]}
             rotation={[0, 0, 0]}
-            scale={0.15}
+            // Keep projection depth independent of logo size so the curved chest
+            // stays inside the projector, and preserve the image's proportions.
+            scale={[
+              logoSize * Math.min(1, logoAspect),
+              logoSize / Math.max(1, logoAspect),
+              0.3,
+            ]}
             map={logoTexture}
             /* map-anisotropy={fullTexture ? 16 : undefined} */
             depthTest={true}

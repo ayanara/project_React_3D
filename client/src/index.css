@@ -106,6 +106,8 @@ input[type="file"] {
 .image-filename { @apply text-xs text-gray-500 truncate; }
 .image-placement { @apply flex gap-4 mt-2; }
 .image-placement label { @apply flex items-center gap-1 cursor-pointer; }
+.logo-position { @apply flex flex-wrap gap-3 mt-2 text-xs; }
+.logo-position label { @apply flex items-center gap-1 cursor-pointer; }
 .image-panel .image-apply { @apply bg-gray-900 text-white border-gray-900 font-semibold; }
 .image-panel .image-cancel { @apply border-0 p-0 text-gray-500 text-xs; }
 .image-status { @apply text-xs text-gray-600; }

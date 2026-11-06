@@ -7,6 +7,7 @@ const state = proxy({
   isLogoTexture: true,
   isFullTexture: false,
   logoDecal: './cute_shiba.png',
+  logoPosition: 'center',
   fullDecal: './cute_shiba.png',
 });
 

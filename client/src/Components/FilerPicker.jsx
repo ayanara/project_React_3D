@@ -40,6 +40,20 @@ export default function FilerPicker() {
     <button disabled={loading} onClick={() => inputRef.current?.click()}>{image ? 'Escolher outra imagem' : 'Enviar imagem'}</button>
     <input ref={inputRef} id="image-file" type="file" accept="image/png,image/jpeg,image/webp" onChange={selectFile} disabled={loading} tabIndex={-1} aria-label="Escolher imagem" />
     <p className="image-help">PNG, JPG ou WebP, até 5 MB.<br />Para logos, prefira PNG com fundo transparente.</p>
+    {snap.product === 'shirt' && <fieldset>
+      <legend>Posição do logo no peito</legend>
+      <div className="logo-position">
+        {[{ value: 'center', label: 'Centro' },
+          { value: 'left', label: 'Esquerdo' },
+          { value: 'right', label: 'Direito' }].map((option) =>
+          <label key={option.value}>
+            <input type="radio" name="logo-position" value={option.value}
+              checked={snap.logoPosition === option.value}
+              onChange={() => { state.logoPosition = option.value; }} /> {option.label}
+          </label>)}
+      </div>
+      <p className="image-help">Lados de quem veste a camiseta.</p>
+    </fieldset>}
     {loading && <p role="status">Preparando imagem…</p>}
     {image && <div className="image-draft">
       <img className="image-preview" src={image} alt="Prévia da imagem escolhida" />
